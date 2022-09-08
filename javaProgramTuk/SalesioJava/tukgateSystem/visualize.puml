@@ -1,0 +1,3 @@
+class Example
+JVM --> TUKGateSystem :createAnInstanceOfOurProgram
+TUKGateSystem --> TUKGateSystem :main
