@@ -1,0 +1,238 @@
+Ques . Python program to Evaluate Postfix Expression .
+Answer : 
+
+Evaluation of Postfix
+
+Example -1:
+
+Let the given expression be “2 3 1 * + 9 -“. We scan all elements one by one.
+1) Scan ‘2’, it’s a number, so push it to stack. Stack contains ‘2’
+2) Scan ‘3’, again a number, push it to stack, stack now contains ‘2 3’ (from bottom to top)
+3) Scan ‘1’, again a number, push it to stack, stack now contains ‘2 3 1’
+4) Scan ‘*’, it’s an operator, pop two operands from stack, apply the * operator on operands, we get 3*1 which results in 3. We push the result ‘3’ to stack. Stack now becomes ‘2 3’.
+5) Scan ‘+’, it’s an operator, pop two operands from stack, apply the + operator on operands, we get 3 + 2 which results in 5. We push the result ‘5’ to stack. Stack now becomes ‘5’.
+6) Scan ‘9’, it’s a number, we push it to the stack. Stack now becomes ‘5 9’.
+7) Scan ‘-‘, it’s an operator, pop two operands from stack, apply the – operator on operands, we get 5 – 9 which results in -4. We push the result ‘-4’ to stack. Stack now becomes ‘-4’.
+
+8) There are no more elements to scan, we return the top element from stack (which is the only element left in stack) 
+
+Example-2 : 456*+
+
+Step	Input symbol	Operation	Stack	Calculation
+1.	4	Push	4	
+2.	5	Push	4,5	
+3.	6	Push	4,5,6	
+4.	*	Pop( 2 elements) and evaluate	4	5*6=30
+5.		Push result 30	4,30	
+6.	+	Pop( 2 elements) and evaluate	Empty	4+30=34
+7.		Push result 34	34	
+8.		No more elements to pop	Empty	34(result)
+Evaluation rule of a Postfix Expression states:
+
+While reading the expression from left to right, push the element in the stack if it is an operand.
+Pop the two operands from the stack, if the element is an operator and then evaluate it.
+Push back the result of the evaluation. Repeat it till the end of the expression.
+Algorithm
+1) Create a stack to store operands (or values).
+2) Scan the given expression and do following for every scanned element.
+
+     a) If the element is a number, push it into the stack
+     b) If the element is a operator, pop operands for the operator from stack. Evaluate the operator and push the result back to the stack
+3) When the expression is ended, the number in the stack is the final answer
+
+Program : 
+
+def postfix_evaluation(s):
+
+    s=s.split()
+
+    n=len(s)
+
+    stack =[]
+
+    for i in range(n):
+
+        if s[i].isdigit():
+
+          #append function is equivalent to push
+
+            stack.append(int(s[i]))
+
+        elif s[i]=="+":
+
+            a=stack.pop()
+
+            b=stack.pop()
+
+            stack.append(int(a)+int(b))
+
+        elif s[i]=="*":
+
+            a=stack.pop()
+
+            b=stack.pop()
+
+            stack.append(int(a)*int(b))
+
+        elif s[i]=="/":
+
+            a=stack.pop()
+
+            b=stack.pop()
+
+            stack.append(int(b)/int(a))
+
+        elif s[i]=="-":
+
+            a=stack.pop()
+
+            b=stack.pop()
+
+            stack.append(int(b)-int(a))            
+
+    return stack.pop()
+
+#space separtor is required , for solving 2 or more digits .
+
+s="10 2 8 * + 3 -"
+
+val=postfix_evaluation(s)
+
+print(val)
+
+
+
+
+
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+import java.util.*;
+ 
+public class PostfixEvaluation
+{
+ 
+  static boolean isOperator(char ch)
+  {
+      if(ch == '+' || ch == '-' || ch == '*' || ch == '/')
+      return true;
+      
+      return false;
+  }
+    
+  static void evaluatePostfix(String exp)
+  {
+      Stack<Integer> postFix = new Stack<>();    // Create postfix stack
+      int n = exp.length();
+      
+      for(int i=0;i<n;i++)
+      {
+        if(isOperator(exp.charAt(i)))
+        {
+        // pop top 2 operands.
+        int op1 = postFix.pop();
+        int op2 = postFix.pop();
+              
+        // evaluate in reverse order i.e. op2 operator op1.
+        switch(exp.charAt(i))
+        {
+            case '+': postFix.push(op2 + op1);
+                      break;
+                      
+            case '-': postFix.push(op2 - op1);
+                      break;
+                      
+            case '*': postFix.push(op2 * op1);
+                      break;
+                
+            case '/': postFix.push(op2 / op1);
+                      break;
+                    
+        }
+        
+        }
+        // Current Char is Operand simple push into stack
+        else
+        {
+        // convert to integer
+        int operand = exp.charAt(i) - '0';
+        postFix.push(operand);
+        }
+      }
+      
+      // Stack at End will contain result.
+      System.out.println(postFix.pop());
+  }
+  
+  public static void main(String args[])
+  {
+      String exp = "823*+7/1-";
+      System.out.print("The PostFix Evaluation for the Given Expression "+exp+" is: ");
+      evaluatePostfix(exp);
+  }
+    
+}
