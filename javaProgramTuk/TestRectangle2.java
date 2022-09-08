@@ -17,7 +17,7 @@ class Rectangle {
 }
 
 class TestRectangle2 {
-    public static void main(String args[]) {
+    public static void main(String args[]) {e:
         Rectangle r1 = new Rectangle(), r2 = new Rectangle();// creating two objects
         r1.insert(11, 5);
         r2.insert(3, 15);
